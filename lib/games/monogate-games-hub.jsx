@@ -87,7 +87,7 @@ function FractalHero({ visible }) {
         Eight operators. Eight universes.
       </h2>
       <p style={{ fontSize: 14, color: "rgba(226,232,240,0.6)", margin: "0 0 24px", maxWidth: 520, lineHeight: 1.7 }}>
-        Real-plane escape-time fractals for all 8 EML-family operators: EML, EAL, EMN, EXL, EDL, DEML, POW, LEX.
+        Real-plane escape-time fractals for all 8 EML-family operators: EML, DEML, EXL, EDL, EAL, EMN, EPL, LEAd.
         The EML operator produces the Devaney exponential family — boundary dimension 1.716.
         EAL, DEML, and EMN generate entirely different geometry.
       </p>

@@ -8,7 +8,7 @@ import IdentityTheorem from "./identity-theorem";
 import NegativeExponent from "./negative-exponent";
 import WeierstrassMachine from "./weierstrass-machine";
 import BillionTrees from "./billion-trees";
-import EMLFractalExplorer from "./fractal-explorer";
+import EMLFractalExplorer from "./EMLFractalExplorer";
 import EMLSynthesizer from "./eml-synthesizer";
 
 function BackButton() {
