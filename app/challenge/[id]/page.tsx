@@ -54,9 +54,16 @@ async function getSubmissions(challengeId: string): Promise<Submission[]> {
 function StatusBadge({ status }: { status: string }) {
   const solved = status === "solved";
   const closed = status === "closed";
-  const bgColor = solved ? "rgba(94,196,122,0.10)" : closed ? "rgba(248,113,113,0.10)" : "rgba(232,160,32,0.10)";
-  const borderColor = solved ? C.green : closed ? C.red : C.orange;
-  const label = solved ? "SOLVED" : closed ? "PROVED IMPOSSIBLE" : "OPEN";
+  const withdrawn = status === "withdrawn";
+  const bgColor = solved
+    ? "rgba(94,196,122,0.10)"
+    : closed
+      ? "rgba(248,113,113,0.10)"
+      : withdrawn
+        ? "rgba(150,150,150,0.10)"
+        : "rgba(232,160,32,0.10)";
+  const borderColor = solved ? C.green : closed ? C.red : withdrawn ? C.muted : C.orange;
+  const label = solved ? "SOLVED" : closed ? "PROVED IMPOSSIBLE" : withdrawn ? "WITHDRAWN" : "OPEN";
   return (
     <span style={{
       display: "inline-block", fontSize: 9, fontWeight: 700,
@@ -110,6 +117,21 @@ export default async function ChallengePage({ params }: { params: { id: string }
           {challenge.description}
         </div>
       </header>
+
+      {/* Withdrawal banner — withdrawn challenges only */}
+      {challenge.status === "withdrawn" && challenge.result_summary && (
+        <div style={{
+          background: "rgba(150,150,150,0.05)", border: `1px solid rgba(150,150,150,0.25)`,
+          borderRadius: 8, padding: "18px 22px", marginBottom: 28,
+        }}>
+          <div style={{ fontSize: 9, color: C.muted, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 10 }}>
+            Withdrawn
+          </div>
+          <div style={{ fontSize: 12, color: "#d0d0d0", lineHeight: 1.8 }}>
+            {challenge.result_summary}
+          </div>
+        </div>
+      )}
 
       {/* Proof box — closed challenges only */}
       {challenge.status === "closed" && challenge.result_summary && (
