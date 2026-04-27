@@ -441,9 +441,12 @@ export default function AttractorViz() {
           Attractor Lab
         </div>
         <div style={{ fontSize: 10, color: C.muted, lineHeight: 1.7, maxWidth: 600 }}>
-          EMLTree(depth=3) fitting target π.  40 random seeds, Adam optimizer.
-          At <strong style={{ color: C.text }}>λ=0</strong> all seeds collapse to the phantom attractor ~3.1696.
-          A tiny penalty <strong style={{ color: C.text }}>λ=0.005</strong> breaks the trap — all seeds reach π.
+          EMLTree(depth=3) fitting target π.  40 random seeds, Adam optimizer at 3000 steps.
+          At <strong style={{ color: C.text }}>λ=0</strong> Adam enters a slow-drift basin near 3.169642
+          in mid-training. <strong style={{ color: C.text }}>This is an optimizer artifact, not an EML
+          saddle</strong> — plain SGD reaches π in 2000 steps; Adam itself leaks to π over ~100k steps.
+          A tiny penalty <strong style={{ color: C.text }}>λ=0.005</strong> collapses the basin in
+          standard step counts — all seeds reach π.
         </div>
       </div>
 
@@ -567,20 +570,24 @@ export default function AttractorViz() {
         fontSize: 10, color: C.muted, lineHeight: 1.8,
       }}>
         <div style={{ fontWeight: 700, color: C.text, marginBottom: 8, fontSize: 11 }}>
-          What is the phantom attractor?
+          What is the slow-drift basin?
         </div>
         <p style={{ margin: "0 0 8px" }}>
-          The EML grammar generates many "simple" constants as low-complexity trees —
-          for example, <span style={{ color: C.accent }}>eml(1,1) = e</span>,{" "}
-          <span style={{ color: C.accent }}>eml(eml(1,1),1) = e^e - 0 ≈ 15.15</span>.
-          Near {ATTRACTOR_VAL.toFixed(4)}, the loss surface has a shallow bowl that
-          traps gradient descent.
+          This is an <strong style={{ color: C.text }}>Adam-specific artifact</strong>, not a property
+          of the EML loss landscape. Plain SGD (no momentum) converges to π in 2000 steps — no detour
+          through {ATTRACTOR_VAL.toFixed(4)}.
+          Under Adam's momentum + per-parameter adaptive learning rates, the trajectory gets
+          temporarily caught in a slow-drift region near {ATTRACTOR_VAL.toFixed(4)} between roughly
+          steps 1000 and 5000. Given enough steps (~100k), Adam itself reaches π; the basin{" "}
+          <strong style={{ color: C.text }}>leaks</strong>, it doesn't trap permanently.
         </p>
         <p style={{ margin: 0 }}>
-          Adding a complexity penalty <span style={{ color: C.accent }}>λ·Σ|leaf − 1|</span>{" "}
-          tilts the landscape: the penalty is near-zero at π (leaves stay close to 1
-          in the optimal construction) but large at the phantom attractor.  A tiny
-          λ=0.005 is enough to flip convergence from 0% → 100% to π.
+          The L1 penalty <span style={{ color: C.accent }}>λ·Σ|leaf − 1|</span>{" "}
+          breaks Adam's slow drift in standard step counts. The penalty is near-zero at π
+          (leaves stay close to 1 in the optimal construction) but large near{" "}
+          {ATTRACTOR_VAL.toFixed(4)}, supplying enough gradient signal that Adam doesn't get
+          caught in the basin. SGD doesn't need the penalty; Adam does. This is why the curve
+          flips from 0/40 → 40/40 reaching π at λ=0.005.
         </p>
       </div>
 
