@@ -17,6 +17,16 @@ const DEV_TOOLS = [
     desc: "Real-time EML node-cost analyzer in the browser. Every mathematical expression gets naïve-vs-SuperBEST costs, operator breakdown, savings bar, and an ELC-class badge. The same recursive-descent optimizer that ships in the Python CLI, running on paste-and-type.",
   },
   {
+    id: "calculator", title: "EML Calculator", icon: "🧮", color: "#c4a77d",
+    tagline: "Every function on your calculator, from one operator.",
+    desc: "Scientific calculator where every button computes via eml(x, y) = exp(x) − ln(y) and the constant 1. Each press shows the EML decomposition, the SuperBEST v5.2 routing, the node count, and the cost class. 34 of 36 standard scientific functions; factorial and mod are honestly outside the elementary class.",
+  },
+  {
+    id: "playground", title: "EML Playground", icon: "▤", color: "#c8a832",
+    tagline: "Real EML, SuperBEST v5.2, complex bypass.",
+    desc: "Side-by-side explorer for the three operator regimes. Real EML pure compositions (11n add, 13n mul) next to v5.2 SuperBEST headlines (2n add via LEdiv, 1n recip via ELSb), plus the complex Euler bypass that unlocks sin/cos in one node. Catalog tab cross-references every identity against EML / EDL / EXL / BEST.",
+  },
+  {
     id: "em-cost", title: "EM Cost Calculator", icon: "∑", color: "#4facfe",
     tagline: "F16-node decomposition of EM formulas.",
     desc: "Decompose any expectation-maximization or scoring expression into the F16 operator basis. Compare the naïve cost against SuperBEST routing and see exactly which terms route through which operators.",

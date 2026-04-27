@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Hub from "./monogate-games-hub";
 import EmCostCalculator from "./em-cost-calculator";
 import LiveOptimizer from "./live-optimizer";
+import EMLPlayground from "./eml-playground-v2";
+import EMLCalculator from "./eml-calculator";
 
 function BackButton() {
   const nav = useNavigate();
@@ -86,6 +88,8 @@ export default function GamesApp() {
         <Route path="/" element={<Hub />} />
         <Route path="/optimizer" element={<Game><LiveOptimizer /></Game>} />
         <Route path="/em-cost" element={<Game><EmCostCalculator /></Game>} />
+        <Route path="/playground" element={<Game><EMLPlayground /></Game>} />
+        <Route path="/calculator" element={<Game><EMLCalculator /></Game>} />
         {/* Everything else moved to 1op.io */}
         <Route path="*" element={<MovedNotice />} />
       </Routes>
