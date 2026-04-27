@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import data from "../petal_eml.json";
 import { type PetalDataset, type PetalRecord, ghLink, LANE_DESCRIPTIONS } from "../petal-types";
+import { PetalLab, TheoremActions } from "./PetalLab";
 
 const dataset = data as unknown as PetalDataset;
 const lane1Records = (dataset.records as PetalRecord[]).filter((r) => r.lane === 1);
+const lane1TheoremIds = lane1Records.map((r) => r.theorem_id);
 
 const ACCENT = "#06B6D4";
 const ACCENT_DIM = "#06B6D440";
@@ -56,6 +58,8 @@ export default function Lane1Page() {
           {LANE_DESCRIPTIONS[1].subtitle} {lane1Records.length} theorems.
         </p>
       </header>
+
+      <PetalLab theoremIds={lane1TheoremIds} />
 
       {lane1Records.map((rec, idx) => (
         <RecordCard key={rec.theorem_id} record={rec} index={idx} total={lane1Records.length} />
@@ -273,6 +277,11 @@ function RecordCard({
           </span>
         )}
       </div>
+
+      <TheoremActions
+        theoremId={record.theorem_id}
+        canonicalProof={record.proof.lean4_full}
+      />
     </article>
   );
 }
